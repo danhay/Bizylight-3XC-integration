@@ -1,5 +1,6 @@
 ﻿using BusylightTester;
 using System;
+using System.Configuration;
 using System.Windows.Forms;
 using MyPhonePlugins;
 using System.Reflection;
@@ -21,7 +22,7 @@ namespace MyCRMPlugins
         {
         //show busylight Mainform Disabled in final version
             frmMain frm = new frmMain();
-         //   frm.Show();
+            //frm.Show();
             _instance = new MyCrmPlugin(callHandler);
          //start busylight Green on load
          frm.busylight.Light(Busylight.BusylightColor.Green);
@@ -60,6 +61,7 @@ namespace MyCRMPlugins
                 // Blink Red Light and Play sound (non working)
                 //Busylight.BusylightVolume vol = Busylight.BusylightVolume.Max;
                 //busylight.Alert(Busylight.BusylightColor.Red, Busylight.BusylightSoundClip.KuandoTrain, vol);
+
                 frm.btnRedWithSound_Click(null, EventArgs.Empty);
             }
             else if (callInfo.State == CallState.Ended)

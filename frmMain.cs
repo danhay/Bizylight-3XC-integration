@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.ComponentModel;
 using System.Drawing;
 using System.Text;
@@ -20,14 +22,12 @@ namespace BusylightTester
     {
         // private static frmMain instance = null;
         internal Busylight.SDK busylight = null;
-
-
+    
         public frmMain()
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Minimized;
             busylight = new Busylight.SDK();
-
 
             cmbSensivity.Items.Clear();
             cmbSensivity.Items.Add(new KeyValuePair<string, byte>("1", 0));
@@ -115,8 +115,39 @@ namespace BusylightTester
 
         internal void btnRedWithSound_Click(object sender, EventArgs e)
         {
+            // set ring volume from config file, default to 0 
+            Busylight.BusylightVolume vol = 0;
 
-            Busylight.BusylightVolume vol = (Busylight.BusylightVolume)tbVolume.Value;
+            // Open the volume setting file
+            StreamReader sr = new StreamReader("Volume.set");
+            
+            // Read the stream to a string, and convert to int
+            String line = sr.ReadLine();
+            int getVol = Convert.ToInt32(line);
+                //MessageBox.Show(line);
+            // Set the volume appropriately
+
+            switch (getVol)
+                {
+                case 25:
+                    vol = BusylightVolume.Low;
+                    break;
+                case 50:
+                    vol = BusylightVolume.Middle;
+                    break;
+                case 75:
+                    vol = BusylightVolume.High;
+                    break;
+                case 100:
+                    vol = BusylightVolume.Max;
+                    break;
+                default:
+                    vol = BusylightVolume.Mute;
+                    break;
+            }
+            
+            // replaced code line below with code lines above to set ring volume
+            // Busylight.BusylightVolume vol = (Busylight.BusylightVolume)tbVolume.Value;
             busylight.Alert(Busylight.BusylightColor.Red, Busylight.BusylightSoundClip.KuandoTrain, vol);
         }
 

@@ -1,0 +1,7 @@
+0
+The first line in this file contains the Volume setting which correspodns to the following options:
+    0:  BusylightVolume.Mute;
+   25:  BusylightVolume.Low;
+   50:  BusylightVolume.Middle;
+   75:  BusylightVolume.High;
+  100:  BusylightVolume.Max;
